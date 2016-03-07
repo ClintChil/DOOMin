@@ -7,8 +7,21 @@ using System.Collections;
 public class FPSInput : MonoBehaviour {
 	public float speed = 6.0f;
 	public float gravity = -9.8f;
+	public const float baseSpeed = 6.0f;
 
 	private CharacterController _charController;
+
+	void Awake() {
+		Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+	}
+
+	void OnDestory() {
+		Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+	}
+
+	private void OnSpeedChanged(float value){
+		speed = baseSpeed * value;
+	}
 
 	void Start() {
 		_charController = GetComponent<CharacterController>();
