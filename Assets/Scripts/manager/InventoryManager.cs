@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class InventoryManager : MonoBehaviour, IGameManager {
 	public ManagerStatus status {get; private set;}
+	public string equippedItem {get; private set;}
 	private Dictionary<string, int> _items;
 
 	public void Startup() {
@@ -41,5 +42,32 @@ public class InventoryManager : MonoBehaviour, IGameManager {
 		}
 
 		DisplayItems();
+	}
+
+	public bool EquipItem(string name) {
+		if (_items.ContainsKey(name) && equippedItem != name) {
+			equippedItem = name;
+			Debug.Log("Equipped " + name);
+			return true;
+		}
+
+		equippedItem = null;
+		Debug.Log("Unequipped");
+		return false;
+	}
+
+	public bool ConsumeItem(string name) {
+		if (_items.ContainsKey(name)) {
+			_items[name]--;
+			if (_items[name] == 0) {
+				_items.Remove(name);
+			}
+		} else {
+			Debug.Log("cannot consume " + name);
+			return false;
+		}
+
+		DisplayItems();
+		return true;
 	}
 }
