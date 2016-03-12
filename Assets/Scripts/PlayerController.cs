@@ -4,17 +4,16 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public float speed;
-	private Rigidbody rb;
+	private Rigidbody _rigidbody;
 
 	void Start() {
-		rb = GetComponent<Rigidbody>();
+		_rigidbody = GetComponent<Rigidbody>();
 	}
 	
 	void FixedUpdate() {
-		float moveHorizontal = Input.GetAxis("Horizontal");
-		float moveVertical = Input.GetAxis("Vertical");
-
-		Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-		rb.AddForce(movement * speed);
+		Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		moveDirection = Camera.main.transform.TransformDirection(moveDirection);
+		moveDirection.y = 0;
+		_rigidbody.AddForce(moveDirection * speed);
 	}
 }
