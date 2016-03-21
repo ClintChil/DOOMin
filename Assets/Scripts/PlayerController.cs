@@ -5,21 +5,23 @@ public class PlayerController : MonoBehaviour {
 
 	public float speed;
 	private Rigidbody _rigidbody;
+	private Touch _touch;
 
 	void Start() {
 		_rigidbody = GetComponent<Rigidbody>();
 	}
 	
-	void FixedUpdate() {
+	void Update() {
 
 		if (Input.touchCount > 0) {
-			Vector2 touchDelta = Input.GetTouch(0).deltaPosition;
-			Vector3 moveDirection = new Vector3(touchDelta.x, 0, touchDelta.y);
+			_touch = Input.GetTouch(0);
 
-			moveDirection = Camera.main.transform.TransformDirection(moveDirection);
-			moveDirection.y = 0;
+//			Vector3 moveDirection = new Vector3(touchDelta.x, 0, touchDelta.y);
 
-			_rigidbody.AddForce(moveDirection * speed);
+//			moveDirection = Camera.main.transform.TransformDirection(moveDirection);
+//			moveDirection.y = 0;
+//
+//			_rigidbody.AddForce(moveDirection * speed);
 		} 
 
 //		Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
