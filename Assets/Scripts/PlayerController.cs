@@ -11,20 +11,35 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-
-		if (Input.touchCount > 0) {
-			Vector2 touchDelta = Input.GetTouch(0).deltaPosition;
-			Vector3 moveDirection = new Vector3(touchDelta.x, 0, touchDelta.y);
-
-			moveDirection = Camera.main.transform.TransformDirection(moveDirection);
-			moveDirection.y = 0;
-
-			_rigidbody.AddForce(moveDirection * speed);
-		} 
-
-//		Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-
-
+		var count = Input.touchCount;
+		for (int i = 0; i < count; i++) {
+			Vector3 touchDeltaPosition = Input.GetTouch(i).deltaPosition;
+			if (Input.touchCount > 0) {
+				if (touchDeltaPosition.x > 0) {
+					_rigidbody.AddForce(Vector3.right * speed * Time.deltaTime * speed);
+					if (Input.GetTouch(0).phase == TouchPhase.Stationary) {
+						_rigidbody.AddForce(Vector3.right * speed * Time.deltaTime * speed);
+					}
+				}
+				if(touchDeltaPosition.x < 0) {
+					_rigidbody.AddForce(-Vector3.right * speed * Time.deltaTime * speed);
+					if (Input.GetTouch(0).phase == TouchPhase.Stationary) {
+						_rigidbody.AddForce(-Vector3.right * speed * Time.deltaTime * speed);
+					}
+				}
+				if (touchDeltaPosition.y > 0) {
+					_rigidbody.AddForce(Vector3.forward * speed * Time.deltaTime * speed);
+					if (Input.GetTouch(0).phase == TouchPhase.Stationary) {
+						_rigidbody.AddForce(Vector3.forward * speed * Time.deltaTime * speed);
+					}
+				}
+				if (touchDeltaPosition.y < 0) {
+					_rigidbody.AddForce(-Vector3.forward * speed * Time.deltaTime * speed);
+					if (Input.GetTouch(0).phase == TouchPhase.Stationary) {
+						_rigidbody.AddForce(-Vector3.forward * speed * Time.deltaTime * speed);
+					}
+				}
+			}
+		}
 	}
 }
