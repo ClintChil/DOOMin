@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 
 				_rigidbody.AddForce (moveDirection * speed);
 
+
 //				if (touchDeltaPosition.x > 0) {
 //					_rigidbody.AddForce(Vector3.right * speed * Time.deltaTime * speed);
 //					if (Input.GetTouch(0).phase == TouchPhase.Stationary) {
